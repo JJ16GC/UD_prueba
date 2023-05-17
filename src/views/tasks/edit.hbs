@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-4 offset-md-4 mt-3">
+        <div class="card">
+            <div class="card-body">
+                <form action="/tasks/edit/{{task._id}}" method="POST">
+                    <div class="mb-3">
+                        <label for="title">Titulo Tarea</label>
+                        <input type="text" name="title" value="{{task.title}}" placeholder="Escribe un titulo"
+                            class="form-control mb-3" autofocus />
+                        <div class="mb-3">
+                            <label for="description">Descripción</label>
+                            <input type="text" name="description" value="{{task.description}}"
+                                placeholder=" Escribe una descripción" class="form-control mb-3" />
+                        </div>
+                        <button type=" submit" class="form-control btn btn-success btn-block">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

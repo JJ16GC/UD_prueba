@@ -1,22 +1,24 @@
 <div class="row">
-  <div class="col-md-4 offset-md-4">
+  <div class="col-md-4 offset-md-4 mt-3">
     <div class="card">
       <div class="card-body">
         <form action="/tasks/create" method="POST">
-          <div class="form-group">
+          <div class="mb-3">
+            <label for="title">Titulo Tarea</label>
             <input
               type="text"
               name="title"
-              placeholder="Write your title"
-              class="form-control"
+              placeholder="Escribe un titulo"
+              class="form-control mb-3"
               autofocus
             />
-            <div class="form-group">
+            <div class="mb-3">
+              <label for="description">Descripción</label>
               <input
                 type="text"
                 name="description"
-                placeholder="Write description"
-                class="form-control"
+                placeholder="Escribe una descripción"
+                class="form-control mb-3"
               />
             </div>
             <button
