@@ -1,21 +1,76 @@
-<div class="row">
-    <div class="col-md-4 offset-md-4 mt-3">
-        <div class="card">
-            <div class="card-body">
-                <form action="/tasks/edit/{{task._id}}" method="POST">
-                    <div class="mb-3">
-                        <label for="title">Titulo Tarea</label>
-                        <input type="text" name="title" value="{{task.title}}" placeholder="Escribe un titulo"
-                            class="form-control mb-3" autofocus />
-                        <div class="mb-3">
-                            <label for="description">Descripción</label>
-                            <input type="text" name="description" value="{{task.description}}"
-                                placeholder=" Escribe una descripción" class="form-control mb-3" />
-                        </div>
-                        <button type=" submit" class="form-control btn btn-success btn-block">Save</button>
-                    </div>
-                </form>
-            </div>
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .submit-area {
+        margin-top: 30px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+</style>
+
+<div class="form-container">
+    <div class="glass-panel">
+        <div class="form-header">
+            <h1 class="form-title">Modificar Orden</h1>
+            <p class="form-subtitle">Actualiza los detalles de la orden ID: {{task.id}}</p>
         </div>
+
+        <form action="/tasks/edit/{{task.id}}" method="POST">
+            <div class="input-group">
+                <label for="title"><i class="fas fa-edit"></i> Nombre de la Orden o Mesa</label>
+                <input type="text" id="title" name="title" value="{{task.title}}" required autofocus>
+            </div>
+
+            <div class="input-group">
+                <label for="description"><i class="fas fa-sticky-note"></i> Detalles y Notas Especiales</label>
+                <textarea id="description" name="description" rows="5" required>{{task.description}}</textarea>
+            </div>
+
+            <div class="submit-area">
+                <a href="/tasks/list" class="btn-secondary">Descartar Cambios</a>
+                <button type="submit" class="btn-neon">
+                    Actualizar Orden <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+        </form>
     </div>
 </div>

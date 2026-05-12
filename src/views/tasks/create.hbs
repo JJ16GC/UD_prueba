@@ -1,33 +1,76 @@
-<div class="row">
-  <div class="col-md-4 offset-md-4 mt-3">
-    <div class="card">
-      <div class="card-body">
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 60px auto;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 10px;
+    }
+
+    .form-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .submit-area {
+        margin-top: 30px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        color: var(--text-muted);
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: 0.3s;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+</style>
+
+<div class="form-container">
+    <div class="glass-panel">
+        <div class="form-header">
+            <h1 class="form-title">Registrar Nueva Orden</h1>
+            <p class="form-subtitle">Ingresa los detalles para la cocina y servicio</p>
+        </div>
+
         <form action="/tasks/create" method="POST">
-          <div class="mb-3">
-            <label for="title">Titulo Tarea</label>
-            <input
-              type="text"
-              name="title"
-              placeholder="Escribe un titulo"
-              class="form-control mb-3"
-              autofocus
-            />
-            <div class="mb-3">
-              <label for="description">Descripción</label>
-              <input
-                type="text"
-                name="description"
-                placeholder="Escribe una descripción"
-                class="form-control mb-3"
-              />
+            <div class="input-group">
+                <label for="title"><i class="fas fa-tag"></i> Nombre de la Orden o Mesa</label>
+                <input type="text" id="title" name="title" placeholder="Ej: Mesa 5 - Pasta Alfredo" required autofocus>
             </div>
-            <button
-              type="submit"
-              class="form-control btn btn-success btn-block"
-            >Save</button>
-          </div>
+
+            <div class="input-group">
+                <label for="description"><i class="fas fa-align-left"></i> Detalles y Notas Especiales</label>
+                <textarea id="description" name="description" rows="5" placeholder="Ej: Sin cebolla, extra queso parmesano..." required></textarea>
+            </div>
+
+            <div class="submit-area">
+                <a href="/tasks/list" class="btn-secondary">Cancelar</a>
+                <button type="submit" class="btn-neon">
+                    Guardar Orden <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
         </form>
-      </div>
     </div>
-  </div>
 </div>

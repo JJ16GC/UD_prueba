@@ -1,6 +1,7 @@
 {
-  "ignore": ["node_moudules", ".git", "**/*.test.ts", "**/*.spec.ts"],
+  "ignore": ["node_modules", ".git", "**/*.test.ts", "**/*.spec.ts"],
   "watch": ["src"],
   "ext": "ts",
-  "exec": "npm run dev"
+  "exec": "ts-node src/index.ts"
 }
+

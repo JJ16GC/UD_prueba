@@ -1,25 +1,140 @@
-<div class="row">
+<style>
+    .page-header {
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #888);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .tasks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+    }
+
+    .task-card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 24px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .task-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+        transform: translateX(-100%);
+        transition: 0.5s;
+    }
+
+    .task-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: rgba(0, 242, 255, 0.3);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .task-card:hover::before {
+        transform: translateX(100%);
+    }
+
+    .task-title {
+        color: var(--neon-cyan);
+        font-size: 1.25rem;
+        margin-bottom: 12px;
+        font-weight: 600;
+        text-transform: capitalize;
+    }
+
+    .task-desc {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+        flex-grow: 1;
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 12px;
+        border-top: 1px solid var(--glass-border);
+        padding-top: 15px;
+    }
+
+    .action-link {
+        padding: 8px;
+        border-radius: 8px;
+        color: var(--text-muted);
+        transition: 0.3s;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .action-link.edit:hover { color: var(--neon-cyan); background: rgba(0, 242, 255, 0.1); }
+    .action-link.delete:hover { color: var(--accent); background: rgba(255, 46, 99, 0.1); }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px;
+        background: var(--glass-bg);
+        border-radius: 30px;
+        border: 1px dashed var(--glass-border);
+    }
+
+    .empty-icon {
+        font-size: 3rem;
+        color: var(--glass-border);
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="page-header">
+    <h1 class="page-title">Gestión de Órdenes</h1>
+    <a href="/tasks/create" class="btn-neon">Nueva Orden <i class="fas fa-plus"></i></a>
+</div>
+
+<div class="tasks-grid">
     {{#each tasks}}
-    <div class="col-md-3 mt-3">
-        <div class="card">
-            <div class="card-body">
-                <h3>{{title}}</h3>
-                <p>{{description}}</p>
-            </div>
-            <div class="card-footer d-flex justify-content-between align-items-center">
-                <a href="/tasks/delete/{{_id}}" class="btn btn-danger">
-                    Delete
-                </a>
-                <a href="/tasks/edit/{{_id}}" class="btn btn-secondary">
-                    Edit
-                </a>
-                <a href="/tasks/edit/{{_id}}" class="btn btn-success">
-                    Check
-                </a>
-            </div>
+    <div class="task-card">
+        <div>
+            <h3 class="task-title">{{this.title}}</h3>
+            <p class="task-desc">{{this.description}}</p>
+        </div>
+        
+        <div class="task-actions">
+            <a href="/tasks/edit/{{this.id}}" class="action-link edit">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a href="/tasks/delete/{{this.id}}" class="action-link delete">
+                <i class="fas fa-trash-alt"></i> Eliminar
+            </a>
         </div>
     </div>
     {{else}}
-    <p class="text-white display-3 text-center my-5">There are no Tasks</p>
+    <div class="empty-state" style="grid-column: 1 / -1;">
+        <i class="fas fa-utensils empty-icon"></i>
+        <h3>No hay órdenes activas</h3>
+        <p style="color: var(--text-muted); margin-top: 10px;">Comienza creando una nueva orden para el restaurante.</p>
+        <br>
+        <a href="/tasks/create" class="btn-neon">Comenzar Ahora</a>
+    </div>
     {{/each}}
 </div>

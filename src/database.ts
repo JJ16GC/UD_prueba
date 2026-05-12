@@ -1,24 +1,23 @@
-import { connect, connection } from "mongoose";
-import { MONGODB_URI } from "./config";
+import { Sequelize } from "sequelize";
+import { DB_STORAGE } from "./config";
 
-export async function connectToMongodb() {
+export const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: DB_STORAGE,
+  logging: false, // Puedes cambiar a console.log para ver las consultas SQL
+});
+
+export async function connectToDatabase() {
   try {
-    await connect(MONGODB_URI);
+    await sequelize.authenticate();
+    console.log("Connection to SQLite has been established successfully.");
+    
+    // Sincronizar modelos
+    await sequelize.sync({ force: false });
+    console.log("Database models synchronized.");
   } catch (error) {
-    console.log("Error:", error);
+    console.error("Unable to connect to the database:", error);
   }
 }
 
-connection.on("connected", () => {
-  console.log("Mongodb connected to:", connection.db.databaseName);
-});
-
-connection.on("error", (error) => {
-  console.error("error", error);
-});
-
-connection.on("disconnected", () => {
-  console.log("Mongodb disconnected");
-});
-
-export default connectToMongodb;
+export default connectToDatabase;

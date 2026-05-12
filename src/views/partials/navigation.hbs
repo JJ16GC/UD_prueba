@@ -1,24 +1,86 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
-    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand" href="#">Restaurante Orion's</a>
-    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="../">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/tasks/create">Nueva Orden</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/tasks/list">Ordenes</a>
-      </li>
+<style>
+    .navbar {
+        position: sticky;
+        top: 20px;
+        z-index: 1000;
+        margin: 20px auto;
+        max-width: 1100px;
+        width: calc(100% - 40px);
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 12px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+        list-style: none;
+    }
+
+    .nav-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .nav-links a:hover {
+        color: var(--neon-cyan);
+        text-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+    }
+
+    .nav-links a.active {
+        color: var(--neon-cyan);
+    }
+
+    .search-box {
+        position: relative;
+        display: none; /* Hidden for now to focus on clean links */
+    }
+
+    @media (max-width: 768px) {
+        .nav-links { display: none; }
+    }
+</style>
+
+<nav class="navbar">
+    <a href="/" class="nav-brand">
+        <i class="fas fa-rocket"></i>
+        <span>ORION'S</span>
+    </a>
+    
+    <ul class="nav-links">
+        <li><a href="/"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a href="/tasks/list"><i class="fas fa-clipboard-list"></i> Órdenes</a></li>
+        <li><a href="/tasks/create"><i class="fas fa-plus-circle"></i> Nueva Orden</a></li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-    </form>
-  </div>
+
+    <div class="nav-actions">
+        <a href="/tasks/create" class="btn-neon" style="padding: 8px 16px; font-size: 0.75rem;">
+            Crear <i class="fas fa-magic"></i>
+        </a>
+    </div>
 </nav>
