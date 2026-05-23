@@ -1,96 +1,126 @@
-# TaskManager Pro - CRUD UD
-> **Desarrollo Back End - Nivel Intermedio | Proyecto Final "Todos a la U"**
+# TaskManager Pro
+> **Sistema de Gestion de Tareas (CRUD) - Arquitectura Empresarial con Node.js y TypeScript**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)](https://sequelize.org/)
 
 ---
 
-## Visión General
+## Vision General
 
-Este proyecto es un sistema de gestión de tareas (CRUD) robusto diseñado con una arquitectura modular y escalable. Implementa patrones modernos de desarrollo en el ecosistema de Node.js, priorizando el tipado fuerte y la mantenibilidad del código.
+TaskManager Pro es una solucion robusta para la gestion de flujos de trabajo personales, desarrollada bajo los mas altos estandares de ingenieria de software. El sistema implementa un patron MVC (Model-View-Controller) utilizando Programacion Orientada a Objetos (POO) en TypeScript, garantizando un codigo mantenible, escalable y con tipado fuerte.
+
+Originalmente concebido para entornos NoSQL, el sistema ha sido optimizado para utilizar SQLite mediante el ORM Sequelize, ofreciendo una solucion ligera pero potente para almacenamiento relacional.
+
+---
 
 ## Arquitectura del Sistema
 
-El sistema sigue una estructura **MVC (Model-View-Controller)** adaptada para TypeScript, desacoplando la lógica de negocio de la presentación.
+El proyecto sigue una estructura desacoplada donde la logica de servidor esta encapsulada en una clase Application.
 
-### Flujo de Datos
+### Flujo de Datos Tecnico
 ```mermaid
-graph LR
-    A[Usuario/Browser] --> B[Express Server]
-    B --> C[Routes]
-    C --> D[Controllers/Logica]
-    D --> E[Mongoose Models]
-    E --> F[(MongoDB Atlas)]
-    D --> G[Handlebars Views]
-    G --> A
+graph TD
+    Client[Browser / Client] --> Routes[Express Router]
+    Routes --> Controllers[Request Handlers]
+    Controllers --> Model[Sequelize Models]
+    Model --> DB[(SQLite Database)]
+    Controllers --> Views[Handlebars Engine]
+    Views --> HTML[Rendered HTML]
+    HTML --> Client
 ```
 
-## Stack Tecnológico
+---
 
-| Componente | Tecnología | Propósito |
+## Stack Tecnologico (Senior Grade)
+
+| Capa | Tecnologia | Justificacion Tecnica |
 | :--- | :--- | :--- |
-| **Core** | Node.js & TypeScript | Entorno de ejecución y tipado estático. |
-| **Framework** | Express.js | Manejo de servidor HTTP y enrutamiento. |
-| **Base de Datos** | MongoDB | Almacenamiento NoSQL documental. |
-| **ODM** | Mongoose | Modelado de objetos y validación de esquemas. |
-| **Template Engine** | Handlebars (HBS) | Renderizado de vistas dinámicas en el servidor. |
-| **Middleware** | Morgan | Logging de peticiones HTTP en desarrollo. |
-
-## Inicio Rápido
-
-### Requisitos Previos
-- [Node.js](https://nodejs.org/) (v16.x o superior)
-- [npm](https://www.npmjs.com/)
-- Cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) o instancia local de MongoDB.
-
-### Instalación
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone <url-del-repo>
-   cd UD_prueba
-   ```
-
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
-
-3. **Configurar variables de entorno:**
-   Crea un archivo `.env` basado en el ejemplo proporcionado:
-   ```bash
-   cp .env.example .env
-   ```
-   *Edita el archivo `.env` con tu URI de conexión a MongoDB.*
-
-4. **Ejecutar en desarrollo:**
-   ```bash
-   npm run dev
-   ```
-
-## Scripts Disponibles
-
-- `npm run dev`: Inicia el servidor con **Nodemon** y **ts-node** para desarrollo rápido.
-- `npm run build`: Compila el código TypeScript a JavaScript en la carpeta `/dist`.
-- `npm run start`: Inicia la aplicación en modo producción desde `/dist`.
-- `npm run clean`: Elimina los artefactos de compilación.
+| **Runtime** | Node.js (v18+) | Entorno asincrono de alto rendimiento. |
+| **Language** | TypeScript | Tipado estatico para prevenir errores en tiempo de diseño. |
+| **Framework** | Express.js | Minimalismo y extensibilidad para servicios web. |
+| **Database** | SQLite3 | Almacenamiento local persistente sin necesidad de servidores externos. |
+| **ORM** | Sequelize | Abstraccion de base de datos para prevenir SQL Injection y facilitar migraciones. |
+| **Templating** | Handlebars (HBS) | Separacion clara entre logica de negocio y presentacion visual. |
 
 ---
 
-## Mejores Prácticas Aplicadas
+## Estructura del Proyecto
 
-1. **Tipado Estricto**: Uso extensivo de interfaces y tipos de TypeScript para reducir errores en tiempo de ejecución.
-2. **Separación de Responsabilidades**: Lógica de aplicación, rutas y base de datos desacopladas en la clase `Application`.
-3. **Seguridad de Configuración**: Uso de variables de entorno para proteger credenciales sensibles.
-4. **Clean Code**: Nombramiento semántico y estructura de archivos organizada por dominio.
+```text
+src/
+├── database.ts      # Configuracion y conexion a SQLite
+├── app.ts           # Clase principal de la aplicacion (Settings, Middlewares, Routes)
+├── index.ts         # Punto de entrada (Bootstrap)
+├── config.ts        # Gestion de variables de entorno
+├── models/          # Definicion de esquemas de datos (Sequelize)
+├── routes/          # Definicion de endpoints y logica de enrutamiento
+└── views/           # Interfaz de usuario (Plantillas .hbs)
+    ├── layouts/     # Estructuras base compartidas
+    ├── partials/    # Componentes UI reutilizables
+    └── tasks/       # Vistas especificas del dominio de tareas
+```
 
 ---
 
-> [!NOTE]
-> Este proyecto fue desarrollado como parte del programa de formación **Todos a la U** para el nivel intermedio de desarrollo Back-End.
+## Inicio Rapido
+
+### 1. Clonacion e Instalacion
+```bash
+git clone <repository-url>
+cd UD_prueba
+npm install
+```
+
+### 2. Configuracion de Entorno
+Crea un archivo .env en la raiz del proyecto:
+```env
+PORT=3000
+DB_STORAGE=./database.sqlite
+```
+
+### 3. Ejecucion
+```bash
+# Modo Desarrollo (Con hot-reload)
+npm run dev
+
+# Compilacion y Produccion
+npm run build
+npm start
+```
 
 ---
-Developed with respect by [Your Name/Team]
+
+## Documentacion de Rutas (Endpoints)
+
+| Ruta | Metodo | Descripcion | Vista |
+| :--- | :--- | :--- | :--- |
+| `/tasks/list` | `GET` | Visualizacion de todas las tareas. | `tasks/list` |
+| `/tasks/create` | `GET/POST` | Formulario y logica de creacion. | `tasks/create` |
+| `/tasks/edit/:id` | `GET/POST` | Recuperacion y actualizacion de datos. | `tasks/edit` |
+| `/tasks/delete/:id` | `GET` | Eliminacion logica/fisica de registros. | N/A |
+
+---
+
+## Analisis de Arquitecto
+
+### Seguridad y Mantenibilidad
+- **Abstraccion de Datos**: El uso de Sequelize protege automaticamente contra ataques de Inyeccion SQL mediante el uso de consultas parametrizadas.
+- **Tipado de Modelos**: Las interfaces de TypeScript aseguran que los objetos de tarea mantengan la integridad estructural en todo el ciclo de vida de la peticion.
+- **Modularidad**: La separacion de rutas por dominio permite escalar el sistema añadiendo nuevos modulos sin afectar el nucleo del servidor.
+
+### Futuras Mejoras (Roadmap)
+1. **Autenticacion**: Implementacion de JWT o sesiones con Passport.js.
+2. **API REST**: Exposicion de endpoints JSON para consumo desde frameworks SPA (React/Vue).
+3. **Validacion de Esquemas**: Integracion de Zod o Joi para validacion estricta de req.body.
+
+---
+
+> [!IMPORTANT]
+> **Nota de Version:** Este proyecto ha migrado de MongoDB a SQLite para mejorar la portabilidad y simplicidad en entornos de desarrollo local. Asegurese de tener permisos de escritura en el directorio raiz para la creacion del archivo .sqlite.
+
+---
+**Desarrollado con Excelencia Tecnica**
